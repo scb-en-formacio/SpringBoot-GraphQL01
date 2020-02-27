@@ -1,0 +1,94 @@
+GraphQL comes with its own language to write GraphQL Schemas called 
+Schema Definition Language (SDL).
+The schema definition consists of all the API functionalities available at an endpoint.
+*****
+Note that the name of the file could be any name of your choice. Just make sure to 
+keep the file extension as .graphqls.
+
+In the above schema, each object is defined with type. The type system in GraphQL is
+the most basic component, and it represents a kind of object that can be fetched from 
+a service and the fields that the object contains within.
+
+In our schema, we have an object called Vehicle, which is our domain object. 
+The Query type represents the query that can be made to the GraphQL server to 
+fetch data. This query is interactive, they can be modified, and new results 
+can be seen. The structure of the query and result is the same. 
+This is important in the GraphQL world because we always get back the result 
+that we expect.
+
+The Mutation type represents the queries that are used to perform write 
+operations on the data.
+**
+Query or Mutation objects are root GraphQL objects. They don’t have any associated 
+data class. In such cases, the resolver classes would implement GraphQLQueryResolver 
+or GraphQLMutationResolver. These resolvers will be searched for methods that map 
+to fields in their respective root types.
+***
+las entidades deben tener sus constructores vacios, ademas de los de creacion
+construidas las clases, se prueba con:
+http://localhost:8080/graphiql
+esto entra en un entorno web para GraphQL:
+# An example GraphQL query might look like:
+#
+#     {
+#       field(arg: "value") {
+#         subField
+#       }
+#     }
+#
+# Keyboard shortcuts:
+#
+#  Prettify Query:  Shift-Ctrl-P (or press the prettify button above)
+#
+#       Run Query:  Ctrl-Enter (or press the play button above)
+#
+#   Auto Complete:  Ctrl-Space (or just start typing)
+#
+
+Dentro de este visor: ****
+Now, run the following query.
+
+mutation {
+   creaVehicul(tipo: "carruaje", codigoModelo: "car300", nombreMarca: "carruaje", fechaLanz: "2018-05-17") 
+  {
+    id
+  }
+}
+
+This will create a row in the Vehicle table. The result should be:
+{
+  "data": {
+    "creaVehiculo": {
+      "id": "1"
+    }
+  }
+}
+
+Let's now run a query to get the data.
+
+query {
+  vehiculos(count: 1) 
+  {
+    id, 
+    tipo, 
+    codigoModelo
+}
+}
+
+The output will be:
+
+{
+  "data": {
+    "vehiculos": [
+      {
+        "id": "1",
+        "tipo": "bus",
+        "codigoModelo": "XYZ123"
+      }
+    ]
+  }
+}
+
+Note that we are requesting for only a limited number of fields, we can 
+change our query by adding or removing fields and see the new results.
+
